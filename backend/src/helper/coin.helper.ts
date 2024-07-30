@@ -45,3 +45,7 @@ export async function fetchCoinRates() {
     console.log(err);
   } 
 }
+
+export async function consistantRatefetching(){
+    setInterval(await fetchCoinRates,5000);
+}
