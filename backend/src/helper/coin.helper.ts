@@ -5,6 +5,7 @@ import {
   CURRENCY,
   COIN_LIMIT,
 } from "../constants";
+import { Coin } from "../model/Coin";
 
 let client = axios.create({
   baseURL: COIN_PRICE_FETCH_URL,
@@ -24,6 +25,23 @@ export async function fetchCoinRates() {
     limit: COIN_LIMIT,
     meta: true,
   };
-  const response = await client.post("/coins/list", payload);
-  console.log(response)
+  try{
+   //fetch and persist
+   const response = await client.post("/coins/list", payload);
+   let datoToInsert = response.data.map((coin:any)=>({
+    name: coin.name,
+    symbol: coin.symbol,
+    price: coin.rate,
+    currency: CURRENCY,
+    color: coin.color, 
+    }))
+   
+   let insertedData = await Coin.insertMany(datoToInsert)
+
+   if(insertedData)
+      console.log('coin rates inserted')
+
+  }catch(err){
+    console.log(err);
+  } 
 }

@@ -1,9 +1,8 @@
 import 'dotenv/config'
-import {Coin} from './model/Coin';
 import { connectDB } from "./db.config";
 import {fetchCoinRates} from './helper/coin.helper';
 
-// connectDB();
+connectDB();
 // let coin = Coin.create({
 //     symbol: "DOGE",
 //     currency: "USD",
