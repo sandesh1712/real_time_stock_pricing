@@ -1,0 +1,4 @@
+### fetch coin price
+GET http://localhost:3010/coin/Tether
+
+

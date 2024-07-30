@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import {
   COIN_PRICE_FETCH_URL,
   API_KEY,
