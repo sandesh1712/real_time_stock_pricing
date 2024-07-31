@@ -8,4 +8,9 @@ export class CoinController {
         let data = await Coin.find({name: coinName}).sort({createdAt: -1}).limit(limit);
         res.send(data);
     }
+
+    async getListOfStocks(req:Request,res:Response){
+        let data = await Coin.find({}).sort({createdAt: -1}).limit(5);
+        res.send(data);
+    }
 }

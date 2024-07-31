@@ -6,6 +6,7 @@ import {
   COIN_LIMIT,
 } from "../constants";
 import { Coin } from "../model/Coin";
+import {io} from '../index'
 
 let client = axios.create({
   baseURL: COIN_PRICE_FETCH_URL,
@@ -27,7 +28,7 @@ export async function fetchCoinRates() {
   };
   try{
    //fetch and persist
-   const response = await client.post("/coins/list", payload);
+   const response = await client.post("/coins/list", payload); // assumming every time rates for same stocks are returned
    let datoToInsert = response.data.map((coin:any)=>({
     name: coin.name,
     symbol: coin.symbol,
@@ -38,8 +39,10 @@ export async function fetchCoinRates() {
    
    let insertedData = await Coin.insertMany(datoToInsert)
 
-   if(insertedData)
+   if(insertedData){
       console.log('coin rates inserted')
+      io.emit("fetch")  // emit event so client can fetch the latest stock data
+   }  
 
   }catch(err){
     console.log(err);
