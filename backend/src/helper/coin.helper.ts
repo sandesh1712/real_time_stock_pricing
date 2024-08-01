@@ -6,7 +6,7 @@ import {
   COIN_LIMIT,
 } from "../constants";
 import { Coin } from "../model/Coin";
-import {io} from '../index'
+import {sse} from '../index'
 
 let client = axios.create({
   baseURL: COIN_PRICE_FETCH_URL,
@@ -41,7 +41,8 @@ export async function fetchCoinRates() {
 
    if(insertedData){
       console.log('coin rates inserted')
-      io.emit("fetch")  // emit event so client can fetch the latest stock data
+      sse.send('update');
+      //io.emit("fetch")  // emit event so client can fetch the latest stock data
    }  
 
   }catch(err){
