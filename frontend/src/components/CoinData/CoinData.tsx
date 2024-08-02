@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { Coin } from "../../types/coin.type";
 import { fetchSingle } from "../../helpers/api.helper";
 import styles from './CoinData.module.css'
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { updateHistory } from "../../redux/reducers/coinHistoryReducer";
 
 function getCurrencySign(currency:string){
   switch(currency){
@@ -24,12 +25,13 @@ let es = new EventSource(apiUrl+'/stream');
 
 export function CoinData(){
   const currentCoin = useSelector((state:any)=>state.currentCoin.coin);
-   
-  const [coinHistory,setCoinHistory] = useState([]);
+  const coinHistory = useSelector((state:any)=>state.coinHistory.history); 
+  
+  const historyDispatch = useDispatch();
 
   const fetchHistory = async ()=>{
     let data = await fetchSingle(currentCoin.name);
-    setCoinHistory(data);
+    historyDispatch(updateHistory(data));
    }
   
   useEffect(()=>{
@@ -49,7 +51,7 @@ export function CoinData(){
             </tr> 
         </thead>
         <tbody>
-          {coinHistory.map((coin:Coin,index)=>{
+          {coinHistory.map((coin:Coin,index:number)=>{
             let dateTime = new Date(coin.createdAt)
             let timeString = `${padZero(dateTime.getHours())} : ${padZero(dateTime.getMinutes())} : ${padZero(dateTime.getSeconds())}`
             return <tr key={`${coin.name}${index}`} className={`${styles.row} ${ index%2===0 ? styles.row_grey : styles.row_beige }`}>
