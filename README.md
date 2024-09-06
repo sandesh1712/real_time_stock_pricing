@@ -1,11 +1,11 @@
-# FomoFactory Assessment
+# Real Time Stock Pricing
 
 This fullstack project involves creating a real-time cryptocurrency price tracking application using React, Redux, Express, and Server-Sent Events (SSE). The application allows users to view and track the latest prices of various cryptocurrencies in real time.
 
 ## Setup
  before setting up services , first clone the repo
 ### Backend
-  1. cd fomo_factory_assessment > backend
+  1. cd real_time_stock_pricing > backend
   2. create .env and add following variables
 
     PORT= {port number for app}
@@ -18,7 +18,7 @@ This fullstack project involves creating a real-time cryptocurrency price tracki
   4. npm start (before starting make sure mongodb is running)
 
 ### Frontend
-  1. cd fomo_factory_assessment > frontend
+  1. cd real_time_stock_pricing > frontend
   2.  create .env and add following variables
     
     REACT_APP_API_URL= {backend url}
